@@ -1,6 +1,6 @@
 ﻿namespace Bowling.Domain
 {
-    internal class Frame
+    internal class NormalFrame : IFrame
     {
         private const int StartingPinsCount = 10;
         private const int MinRollsPerFrameCount = 2;

@@ -6,8 +6,8 @@
 
         public const int FrameCount = 10;
 
-        public const int MinAttemptsPerFrame = 2;
+        public const int AttemptsPerFrame = 2;
 
-        public const int MinRollsPerGameCount = FrameCount*MinAttemptsPerFrame;
+        public const int MinRollsPerGameCount = FrameCount*AttemptsPerFrame;
     }
 }

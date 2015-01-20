@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BowlingException.cs" />
-    <Compile Include="Frame.cs" />
+    <Compile Include="LastFrame.cs" />
+    <Compile Include="NormalFrame.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

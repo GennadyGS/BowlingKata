@@ -7,8 +7,8 @@ namespace Bowling.Domain
     {
         private const int FrameCount = 10;
 
-        private readonly ICollection<Frame> _frames = new LinkedList<Frame>();
-        private Frame _currentFrame;
+        private readonly ICollection<IFrame> _frames = new LinkedList<IFrame>();
+        private IFrame _currentFrame;
 
         public int Score()
         {
@@ -20,7 +20,7 @@ namespace Bowling.Domain
             CurrentFrame.Roll(rolledPins);
         }
 
-        private Frame CurrentFrame
+        private IFrame CurrentFrame
         {
             get
             {
@@ -30,11 +30,16 @@ namespace Bowling.Domain
                     {
                         throw new BowlingException("Game is over");
                     }
-                    _currentFrame = new Frame();
+                    _currentFrame = CreateFrame();
                     _frames.Add(_currentFrame);
                 }
                 return _currentFrame;
             }
+        }
+
+        private IFrame CreateFrame()
+        {
+            return _frames.Count < FrameCount - 1 ? (IFrame) new NormalFrame() : new LastFrame();
         }
     }
 }
