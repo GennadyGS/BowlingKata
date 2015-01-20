@@ -66,11 +66,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FluentAssert.License.txt" />
-    <Content Include="FluentAssert.Provenance.txt" />
-    <Content Include="FluentAssert.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Bowling.Domain\Bowling.Domain.csproj">
       <Project>{8BD4DD98-F1B4-4B28-8469-B91622592141}</Project>
       <Name>Bowling.Domain</Name>
