@@ -54,24 +54,44 @@ namespace Bowling.Tests
         [Fact]
         public void ShouldCountTheScoreCorrectly()
         {
-            const int maxSafePinsCount = Consts.MaxPinCount / 2;
-            var random = new Random();
             int totalPins = 0;
-            for (int i = 0; i < Consts.MinRollsPerGameCount; i++)
+            var rollsGenerator = new RollGenerator(FrameResult.Normal);
+            foreach (int pinCount in rollsGenerator.Rolls)
             {
-                var pins = random.Next(maxSafePinsCount);
-                totalPins += pins;
-                _sut.Roll(pins);
+                _sut.Roll(pinCount);
+                totalPins += pinCount;
             }
             Assert.Equal(totalPins, _sut.Score());
         }
 
         [Fact]
-        public void ShouldLimitNumberOfFailedRollsPerGame()
+        public void ShouldLimitNumberOfZeroRollsPerGame()
         {
             for (int i = 0; i < Consts.MinRollsPerGameCount; i++)
             {
                 _sut.Roll(0);
+            }
+            Assert.Throws<BowlingException>(() => _sut.Roll(0));
+        }
+
+        [Fact]
+        public void ShouldLimitNumberOfRollsInNormalFramesPerGame()
+        {
+            var rollGenerator = new RollGenerator(FrameResult.Normal);
+            foreach (int pinCount in rollGenerator.Rolls)
+            {
+                _sut.Roll(pinCount);
+            }
+            Assert.Throws<BowlingException>(() => _sut.Roll(0));
+        }
+
+        [Fact]
+        public void ShouldLimitNumberOfRollsInSpareFramesPerGame()
+        {
+            var rollGenerator = new RollGenerator(FrameResult.Spare);
+            foreach (int pinCount in rollGenerator.Rolls)
+            {
+                _sut.Roll(pinCount);
             }
             Assert.Throws<BowlingException>(() => _sut.Roll(0));
         }

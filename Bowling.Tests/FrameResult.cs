@@ -1,6 +1,6 @@
 ﻿namespace Bowling.Tests
 {
-    internal enum FrameResult
+    public enum FrameResult
     {
         Normal,
         Spare,
