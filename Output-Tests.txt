@@ -1,0 +1,17 @@
+﻿------ Discover test started ------
+[xUnit.net 00:00:00.0000009] Discovery started
+[xUnit.net 00:00:00.0960331] Discovery starting: Bowling.Tests.dll
+[xUnit.net 00:00:00.3777274] Discovery finished: Bowling.Tests.dll (4 tests)
+[xUnit.net 00:00:00.3877742] Discovery complete
+========== Discover test finished: 4 found (0:00:00,4703251) ==========
+------ Run test started ------
+[xUnit.net 00:00:00.0000016] Execution started
+[xUnit.net 00:00:00.0006061] Settings: MaxParallelThreads = 0, NameDisplay = Short, ParallelizeAssemblies = False, ParallelizeTestCollections = True, ShutdownAfterRun = False
+[xUnit.net 00:00:00.0010167] Discovery started
+[xUnit.net 00:00:00.0267746] Discovery starting: Bowling.Tests.dll
+[xUnit.net 00:00:00.4338252] Discovery finished: Bowling.Tests.dll (4 tests)
+[xUnit.net 00:00:00.4497134] Discovery complete
+[xUnit.net 00:00:00.4497134] Execution starting: Bowling.Tests.dll
+[xUnit.net 00:00:00.4497134] Execution finished: Bowling.Tests.dll
+[xUnit.net 00:00:00.4497134] Execution complete
+========== Run test finished: 4 run (0:00:00,8543114) ==========
