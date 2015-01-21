@@ -5,12 +5,12 @@ using Bowling.Domain;
 
 namespace Bowling.Tests
 {
-    internal class RollGenerator
+    internal class GameRollGenerator
     {
         private readonly FrameResult _frameResult;
         private readonly Random _randomRoll = new Random();
 
-        public RollGenerator(FrameResult frameResult)
+        public GameRollGenerator(FrameResult frameResult)
         {
             _frameResult = frameResult;
         }

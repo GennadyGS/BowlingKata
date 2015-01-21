@@ -61,7 +61,7 @@
     <Compile Include="FrameRollGenerator.cs" />
     <Compile Include="NormalFrameRollGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RollGenerator.cs" />
+    <Compile Include="GameRollGenerator.cs" />
     <Compile Include="SpareFrameRollGenerator.cs" />
     <Compile Include="StrikeFrameRollGenerator.cs" />
   </ItemGroup>
