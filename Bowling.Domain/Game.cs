@@ -39,7 +39,7 @@ namespace Bowling.Domain
 
         private IFrame CreateFrame()
         {
-            return _frames.Count < FrameCount - 1 ? (IFrame) new NormalFrame() : new LastFrame();
+            return _frames.Count < FrameCount - 1 ? new Frame() : new LastFrame();
         }
     }
 }

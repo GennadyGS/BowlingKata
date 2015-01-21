@@ -3,7 +3,9 @@
     internal interface IFrame
     {
         bool IsOver { get; }
+        
         void Roll(int rolledPins);
+        
         int Score();
     }
 }

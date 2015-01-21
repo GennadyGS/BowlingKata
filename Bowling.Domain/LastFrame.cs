@@ -1,16 +1,19 @@
 namespace Bowling.Domain
 {
-    internal class LastFrame: IFrame
+    internal class LastFrame : Frame
     {
-        public bool IsOver { get; private set; }
-        public void Roll(int rolledPins)
+        private const int MaxRollsPerLastFrame = 3;
+
+        private bool IsSpecialResult(FrameResult? result)
         {
-            throw new System.NotImplementedException();
+            return result == FrameResult.Spare || result == FrameResult.Strike;
         }
 
-        public int Score()
+        protected override int GetAllowedRollsCount()
         {
-            throw new System.NotImplementedException();
+            return IsSpecialResult(Result)
+                ? MaxRollsPerLastFrame
+                : base.GetAllowedRollsCount();
         }
     }
 }
