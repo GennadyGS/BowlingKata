@@ -7,7 +7,12 @@ namespace Bowling.Tests
 {
     internal class GameRollGenerator
     {
-        private readonly Random _randomRoll = new Random();
+        private readonly Random _random;
+
+        public GameRollGenerator(Random random)
+        {
+            _random = random;
+        }
 
         public IEnumerable<int> GenerateRolls(FrameResult frameResult)
         {
@@ -19,11 +24,11 @@ namespace Bowling.Tests
             switch (frameResult)
             {
                 case FrameResult.Normal:
-                    return new NormalFrameRollGenerator(isLast, _randomRoll);
+                    return new NormalFrameRollGenerator(isLast, _random);
                 case FrameResult.Spare:
-                    return new SpareFrameRollGenerator(isLast, _randomRoll);
+                    return new SpareFrameRollGenerator(isLast, _random);
                 case FrameResult.Strike:
-                    return new StrikeFrameRollGenerator(isLast, _randomRoll);
+                    return new StrikeFrameRollGenerator(isLast, _random);
             }
             throw new ArgumentOutOfRangeException("frameResult");
         }

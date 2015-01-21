@@ -35,7 +35,10 @@ namespace Bowling.Domain
 
         public bool IsOver
         {
-            get { return RollsCount >= GetAllowedRollsCount(); }
+            get
+            {
+                return RollsCount >= GetAllowedRollsCount();
+            }
         }
 
         FrameResult? IFrame.Result
@@ -96,7 +99,7 @@ namespace Bowling.Domain
 
         protected virtual int GetAllowedRollsCount()
         {
-            return Consts.RollsPerFrame;
+            return Result == FrameResult.Strike ? 1 : Consts.RollsPerFrame;
         }
     }
 }

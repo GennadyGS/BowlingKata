@@ -10,9 +10,14 @@ namespace Bowling.Tests
 {
     public class BowlingTests
     {
-        private readonly Game _sut = new Game();
         private readonly Random _random = new Random();
-        private readonly GameRollGenerator _rollsGenerator = new GameRollGenerator();
+        private readonly GameRollGenerator _rollsGenerator;
+        private readonly Game _sut = new Game();
+
+        public BowlingTests()
+        {
+            _rollsGenerator = new GameRollGenerator(_random);
+        }
 
         [Fact]
         public void ShouldReturnZeroScoreOnStart()
@@ -97,6 +102,22 @@ namespace Bowling.Tests
             int nextRollPinCount = _random.Next(1, Consts.StartingPinsCount);
             _sut.Roll(nextRollPinCount);
             Assert.Equal(frameRolls.Sum() + nextRollPinCount + nextRollPinCount, _sut.Score());
+        }
+
+        [Fact]
+        public void ShouldScoreCorrectlyStrikeFrame()
+        {
+            List<int> frameRolls = _rollsGenerator.CreateFrameRollGenerator(FrameResult.Strike).GetRolls().ToList();
+            foreach (int pinCount in frameRolls)
+            {
+                _sut.Roll(pinCount);
+            }
+            List<int> nextFrameRolls = _rollsGenerator.CreateFrameRollGenerator(FrameResult.Normal).GetRolls().ToList();
+            foreach (int pinCount in nextFrameRolls)
+            {
+                _sut.Roll(pinCount);
+            }
+            Assert.Equal(frameRolls.Sum() + nextFrameRolls.Sum() * 2, _sut.Score());
         }
     }
 }
