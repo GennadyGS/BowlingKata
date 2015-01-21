@@ -15,20 +15,9 @@ namespace Bowling.Tests
             _frameResult = frameResult;
         }
 
-        public IEnumerable<int> Rolls
+        public IEnumerable<int> GenerateRolls()
         {
-            get { return Frames.SelectMany(generator => generator.Rolls); }
-        }
-
-        private IEnumerable<FrameRollGenerator> Frames
-        {
-            get
-            {
-                for (int i = 0; i < Consts.FrameCount; i++)
-                {
-                    yield return CreateFrameRollGenerator(_frameResult, i == Consts.FrameCount - 1);
-                }
-            }
+            return GenerateFrames().SelectMany(generator => generator.GetRolls());
         }
 
         public FrameRollGenerator CreateFrameRollGenerator(FrameResult frameResult, bool isLast = false)
@@ -43,6 +32,14 @@ namespace Bowling.Tests
                     return new StrikeFrameRollGenerator(isLast, _randomRoll);
             }
             throw new ArgumentOutOfRangeException("frameResult");
+        }
+
+        private IEnumerable<FrameRollGenerator> GenerateFrames()
+        {
+            for (int i = 0; i < Consts.FrameCount; i++)
+            {
+                yield return CreateFrameRollGenerator(_frameResult, i == Consts.FrameCount - 1);
+            }
         }
     }
 }

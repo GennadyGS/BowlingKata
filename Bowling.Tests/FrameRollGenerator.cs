@@ -17,14 +17,14 @@ namespace Bowling.Tests
             _randomRoll = randomRoll;
         }
 
-        public abstract IEnumerable<int> Rolls { get; }
-
         public abstract FrameResult FrameResult { get; }
 
         protected bool IsLast
         {
             get { return _isLast; }
         }
+
+        public abstract IEnumerable<int> GetRolls();
 
         protected int GenerateNextRolledPins(bool? cleanUp = null)
         {

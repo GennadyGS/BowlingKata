@@ -10,16 +10,13 @@ namespace Bowling.Tests
         {
         }
 
-        public override IEnumerable<int> Rolls
+        public override IEnumerable<int> GetRolls()
         {
-            get
+            yield return GenerateNextRolledPins(true);
+            if (IsLast)
             {
-                yield return GenerateNextRolledPins(true);
-                if (IsLast)
-                {
-                    yield return GenerateNextRolledPins();
-                    yield return GenerateNextRolledPins();
-                }
+                yield return GenerateNextRolledPins();
+                yield return GenerateNextRolledPins();
             }
         }
 

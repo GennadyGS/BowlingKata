@@ -67,7 +67,7 @@ namespace Bowling.Tests
         public void ShouldLimitNumberOfRollsPerGame(FrameResult frameResult)
         {
             var rollGenerator = new RollGenerator(FrameResult.Normal);
-            foreach (int pinCount in rollGenerator.Rolls)
+            foreach (int pinCount in rollGenerator.GenerateRolls())
             {
                 _sut.Roll(pinCount);
             }
@@ -79,7 +79,7 @@ namespace Bowling.Tests
         {
             int totalPins = 0;
             var rollsGenerator = new RollGenerator(FrameResult.Normal);
-            foreach (int pinCount in rollsGenerator.Rolls)
+            foreach (int pinCount in rollsGenerator.GenerateRolls())
             {
                 _sut.Roll(pinCount);
                 totalPins += pinCount;
@@ -91,7 +91,7 @@ namespace Bowling.Tests
         public void ShouldScoreCorrectlySpareFrame()
         {
             var rollsGenerator = new RollGenerator(FrameResult.Normal);
-            List<int> frameRolls = rollsGenerator.CreateFrameRollGenerator(FrameResult.Spare).Rolls.ToList();
+            List<int> frameRolls = rollsGenerator.CreateFrameRollGenerator(FrameResult.Spare).GetRolls().ToList();
             foreach (int pinCount in frameRolls)
             {
                 _sut.Roll(pinCount);
