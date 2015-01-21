@@ -22,7 +22,7 @@ namespace Bowling.Tests
         [Fact]
         public void ShouldReturnZeroScoreOnStart()
         {
-            int score = _sut.Score();
+            int score = _sut.GetScore();
             score.ShouldBeEqualTo(0, "Score must be zero on game start");
         }
 
@@ -31,7 +31,7 @@ namespace Bowling.Tests
         {
             int rolledPins = _random.Next(Consts.StartingPinsCount);
             _sut.Roll(rolledPins);
-            int score = _sut.Score();
+            int score = _sut.GetScore();
             score.ShouldBeEqualTo(rolledPins, string.Format("Score after first roll must be {0}", rolledPins));
         }
 
@@ -88,7 +88,7 @@ namespace Bowling.Tests
                 _sut.Roll(pinCount);
                 totalPins += pinCount;
             }
-            Assert.Equal(totalPins, _sut.Score());
+            Assert.Equal(totalPins, _sut.GetScore());
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Bowling.Tests
         {
             RollGeneratedFrame(FrameResult.Spare);
             var frameRolls2 = RollGeneratedFrame(FrameResult.Normal);
-            Assert.Equal(Consts.StartingPinsCount + frameRolls2.Sum() + frameRolls2.First(), _sut.Score());
+            Assert.Equal(Consts.StartingPinsCount + frameRolls2.Sum() + frameRolls2.First(), _sut.GetScore());
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Bowling.Tests
         {
             RollGeneratedFrame(FrameResult.Strike);
             var frameRolls2 = RollGeneratedFrame(FrameResult.Normal);
-            Assert.Equal(Consts.StartingPinsCount + frameRolls2.Sum()*2, _sut.Score());
+            Assert.Equal(Consts.StartingPinsCount + frameRolls2.Sum()*2, _sut.GetScore());
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace Bowling.Tests
             RollGeneratedFrame(FrameResult.Strike);
             RollGeneratedFrame(FrameResult.Spare);
             var frameRolls3 = RollGeneratedFrame(FrameResult.Normal);
-            Assert.Equal(Consts.StartingPinsCount * 3 + frameRolls3.Sum() + frameRolls3.First(), _sut.Score());
+            Assert.Equal(Consts.StartingPinsCount * 3 + frameRolls3.Sum() + frameRolls3.First(), _sut.GetScore());
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace Bowling.Tests
             RollGeneratedFrame(FrameResult.Strike);
             RollGeneratedFrame(FrameResult.Strike);
             var frameRolls3 = RollGeneratedFrame(FrameResult.Normal);
-            Assert.Equal(Consts.StartingPinsCount * 3 + frameRolls3.Sum() * 2 + frameRolls3.First(), _sut.Score());
+            Assert.Equal(Consts.StartingPinsCount * 3 + frameRolls3.Sum() * 2 + frameRolls3.First(), _sut.GetScore());
         }
 
         private List<int> RollGeneratedFrame(FrameResult frameResult)

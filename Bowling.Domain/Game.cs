@@ -25,7 +25,7 @@ namespace Bowling.Domain
             }
         }
 
-        public int Score()
+        public int GetScore()
         {
             return GetMainScore() + GetBonuses();
         }
