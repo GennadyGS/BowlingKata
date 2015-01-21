@@ -1,4 +1,5 @@
-﻿using Bowling.Domain;
+﻿using System;
+using Bowling.Domain;
 using FluentAssert;
 using Xunit;
 using Xunit.Extensions;
@@ -7,12 +8,8 @@ namespace Bowling.Tests
 {
     public class BowlingTests
     {
-        private readonly Game _sut;
-
-        public BowlingTests()
-        {
-            _sut = new Game();
-        }
+        private readonly Game _sut = new Game();
+        private readonly Random _random = new Random();
 
         [Fact]
         public void ShouldReturnZeroScoreOnStart()
@@ -21,12 +18,10 @@ namespace Bowling.Tests
             score.ShouldBeEqualTo(0, "Score must be zero on game start");
         }
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(4)]
-        public void ShouldReturnCorrectScoreFirstRoll(int rolledPins)
+        [Fact]
+        public void ShouldReturnCorrectScoreFirstRoll()
         {
+            int rolledPins = _random.Next(Consts.StartingPinsCount);
             _sut.Roll(rolledPins);
             int score = _sut.Score();
             score.ShouldBeEqualTo(rolledPins, string.Format("Score after first roll must be {0}", rolledPins));
