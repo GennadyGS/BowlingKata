@@ -154,5 +154,10 @@ namespace Bowling.Tests
                 get { return FrameResult.Strike; }
             }
         }
+
+        public IEnumerable<int> GenerateFrameRolls()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

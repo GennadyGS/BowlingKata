@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Bowling.Domain;
 using FluentAssert;
 using Xunit;
@@ -73,7 +75,7 @@ namespace Bowling.Tests
         }
 
         [Fact]
-        public void ShouldScoreCorrectlyPerGameInNormalFrames()
+        public void ShouldScoreCorrectlyGameWithNormalFrames()
         {
             int totalPins = 0;
             var rollsGenerator = new RollGenerator(FrameResult.Normal);
@@ -83,6 +85,19 @@ namespace Bowling.Tests
                 totalPins += pinCount;
             }
             Assert.Equal(totalPins, _sut.Score());
+        }
+
+        [Fact]
+        public void ShouldScoreCorrectlySpareFrame()
+        {
+            var rollsGenerator = new RollGenerator(FrameResult.Spare);
+            List<int> frameRolls = rollsGenerator.GenerateFrameRolls().ToList();
+            int nextRoll = rollsGenerator.GenerateFrameRolls().First();
+            foreach (int pinCount in frameRolls)
+            {
+                _sut.Roll(pinCount);
+            }
+            Assert.Equal(frameRolls.Sum() + nextRoll, _sut.Score());
         }
     }
 }
