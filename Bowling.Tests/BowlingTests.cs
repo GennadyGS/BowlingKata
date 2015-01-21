@@ -10,8 +10,9 @@ namespace Bowling.Tests
 {
     public class BowlingTests
     {
-        private readonly Random _random = new Random();
         private readonly Game _sut = new Game();
+        private readonly Random _random = new Random();
+        private readonly GameRollGenerator _rollsGenerator = new GameRollGenerator();
 
         [Fact]
         public void ShouldReturnZeroScoreOnStart()
@@ -66,8 +67,7 @@ namespace Bowling.Tests
         [InlineData(FrameResult.Strike)]
         public void ShouldLimitNumberOfRollsPerGame(FrameResult frameResult)
         {
-            var rollGenerator = new GameRollGenerator(FrameResult.Normal);
-            foreach (int pinCount in rollGenerator.GenerateRolls())
+            foreach (int pinCount in _rollsGenerator.GenerateRolls(FrameResult.Normal))
             {
                 _sut.Roll(pinCount);
             }
@@ -78,8 +78,7 @@ namespace Bowling.Tests
         public void ShouldScoreCorrectlyGameWithNormalFrames()
         {
             int totalPins = 0;
-            var rollsGenerator = new GameRollGenerator(FrameResult.Normal);
-            foreach (int pinCount in rollsGenerator.GenerateRolls())
+            foreach (int pinCount in _rollsGenerator.GenerateRolls(FrameResult.Normal))
             {
                 _sut.Roll(pinCount);
                 totalPins += pinCount;
@@ -90,8 +89,7 @@ namespace Bowling.Tests
         [Fact]
         public void ShouldScoreCorrectlySpareFrame()
         {
-            var rollsGenerator = new GameRollGenerator(FrameResult.Normal);
-            List<int> frameRolls = rollsGenerator.CreateFrameRollGenerator(FrameResult.Spare).GetRolls().ToList();
+            List<int> frameRolls = _rollsGenerator.CreateFrameRollGenerator(FrameResult.Spare).GetRolls().ToList();
             foreach (int pinCount in frameRolls)
             {
                 _sut.Roll(pinCount);
