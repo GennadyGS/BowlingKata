@@ -19,7 +19,7 @@ namespace Bowling.Tests
         }
 
         [Fact]
-        public void ShouldReturnCorrectScoreFirstRoll()
+        public void ShouldReturnCorrectScoreAfterFirstRoll()
         {
             int rolledPins = _random.Next(Consts.StartingPinsCount);
             _sut.Roll(rolledPins);
@@ -28,13 +28,13 @@ namespace Bowling.Tests
         }
 
         [Fact]
-        public void SholdThrowExceptionOnRollLimitViolation()
+        public void SholdThrowExceptionOnRolledPinsLimitViolation()
         {
             Assert.Throws<BowlingException>(() => _sut.Roll(Consts.StartingPinsCount + 1));
         }
 
         [Fact]
-        public void SholdThrowExceptionOnDoubleRollLimitViolation()
+        public void SholdThrowExceptionOnRolledPinsLimitViolationByTwoRolls()
         {
             int rolledPins1 = _random.Next(Consts.StartingPinsCount);
             int rolledPins2 = Consts.StartingPinsCount + 1 - rolledPins1;
@@ -46,7 +46,7 @@ namespace Bowling.Tests
         }
 
         [Fact]
-        public void ShouldLimitNumberOfZeroRollsPerGame()
+        public void ShouldLimitNumberOfUnsuccessfulRollsPerGame()
         {
             for (int i = 0; i < Consts.FrameCount; i++)
             {
@@ -56,19 +56,6 @@ namespace Bowling.Tests
                 }
             }
             Assert.Throws<BowlingException>(() => _sut.Roll(0));
-        }
-
-        [Fact]
-        public void ShouldCountTheScorerCorrectlyInNormalFrames()
-        {
-            int totalPins = 0;
-            var rollsGenerator = new RollGenerator(FrameResult.Normal);
-            foreach (int pinCount in rollsGenerator.Rolls)
-            {
-                _sut.Roll(pinCount);
-                totalPins += pinCount;
-            }
-            Assert.Equal(totalPins, _sut.Score());
         }
 
         [Theory]
@@ -83,6 +70,19 @@ namespace Bowling.Tests
                 _sut.Roll(pinCount);
             }
             Assert.Throws<BowlingException>(() => _sut.Roll(0));
+        }
+
+        [Fact]
+        public void ShouldScoreCorrectlyPerGameInNormalFrames()
+        {
+            int totalPins = 0;
+            var rollsGenerator = new RollGenerator(FrameResult.Normal);
+            foreach (int pinCount in rollsGenerator.Rolls)
+            {
+                _sut.Roll(pinCount);
+                totalPins += pinCount;
+            }
+            Assert.Equal(totalPins, _sut.Score());
         }
     }
 }
