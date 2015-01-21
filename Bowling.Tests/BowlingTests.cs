@@ -25,7 +25,7 @@ namespace Bowling.Tests
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(4)]
-        public void ShouldReturnCorrectCorrectlyScoreFirstRoll(int rolledPins)
+        public void ShouldReturnCorrectScoreFirstRoll(int rolledPins)
         {
             _sut.Roll(rolledPins);
             int score = _sut.Score();
