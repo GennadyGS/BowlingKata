@@ -8,8 +8,8 @@ namespace Bowling.Tests
 {
     public class BowlingTests
     {
-        private readonly Game _sut = new Game();
         private readonly Random _random = new Random();
+        private readonly Game _sut = new Game();
 
         [Fact]
         public void ShouldReturnZeroScoreOnStart()
@@ -33,11 +33,11 @@ namespace Bowling.Tests
             Assert.Throws<BowlingException>(() => _sut.Roll(Consts.StartingPinsCount + 1));
         }
 
-        [Theory]
-        [InlineData(2, 9)]
-        [InlineData(4, 7)]
-        public void SholdThrowExceptionOnDoubleRollLimitViolation(int rolledPins1, int rolledPins2)
+        [Fact]
+        public void SholdThrowExceptionOnDoubleRollLimitViolation()
         {
+            int rolledPins1 = _random.Next(Consts.StartingPinsCount);
+            int rolledPins2 = Consts.StartingPinsCount + 1 - rolledPins1;
             Assert.Throws<BowlingException>(() =>
             {
                 _sut.Roll(rolledPins1);
