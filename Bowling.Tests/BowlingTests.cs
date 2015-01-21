@@ -90,14 +90,15 @@ namespace Bowling.Tests
         [Fact]
         public void ShouldScoreCorrectlySpareFrame()
         {
-            var rollsGenerator = new RollGenerator(FrameResult.Spare);
-            List<int> frameRolls = rollsGenerator.GenerateFrameRolls().ToList();
-            int nextRoll = rollsGenerator.GenerateFrameRolls().First();
+            var rollsGenerator = new RollGenerator(FrameResult.Normal);
+            List<int> frameRolls = rollsGenerator.CreateFrameRollGenerator(FrameResult.Spare).Rolls.ToList();
             foreach (int pinCount in frameRolls)
             {
                 _sut.Roll(pinCount);
             }
-            Assert.Equal(frameRolls.Sum() + nextRoll, _sut.Score());
+            int nextRollPinCount = _random.Next(1, Consts.StartingPinsCount);
+            _sut.Roll(nextRollPinCount);
+            Assert.Equal(frameRolls.Sum() + nextRollPinCount + nextRollPinCount, _sut.Score());
         }
     }
 }
