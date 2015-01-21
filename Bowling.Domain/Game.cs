@@ -5,8 +5,6 @@ namespace Bowling.Domain
 {
     public class Game
     {
-        private const int FrameCount = 10;
-
         private readonly ICollection<IFrame> _frames = new LinkedList<IFrame>();
         private IFrame _currentFrame;
 
@@ -26,7 +24,7 @@ namespace Bowling.Domain
             {
                 if (_currentFrame == null || _currentFrame.IsOver)
                 {
-                    if (_frames.Count >= FrameCount)
+                    if (_frames.Count >= Consts.FrameCount)
                     {
                         throw new BowlingException("Game is over");
                     }
@@ -39,7 +37,7 @@ namespace Bowling.Domain
 
         private IFrame CreateFrame()
         {
-            return _frames.Count < FrameCount - 1 ? new Frame() : new LastFrame();
+            return _frames.Count < Consts.FrameCount - 1 ? new Frame() : new LastFrame();
         }
     }
 }

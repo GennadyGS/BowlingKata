@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bowling.Domain;
 
 namespace Bowling.Tests
 {
@@ -71,7 +72,7 @@ namespace Bowling.Tests
             {
                 if (_pinsRemained == 0)
                 {
-                    _pinsRemained = Consts.MaxPinCount;
+                    _pinsRemained = Consts.StartingPinsCount;
                 }
                 bool ultimateCleanup = cleanUp ?? _randomRoll.Next(2) > 0;
                 int pinsRolled = ultimateCleanup ? _pinsRemained : _randomRoll.Next(_pinsRemained - 1);

@@ -5,8 +5,6 @@ namespace Bowling.Domain
 {
     internal class Frame : IFrame
     {
-        public const int StartingPinsCount = 10;
-        private const int RollsPerFrame = 2;
         private readonly List<int> _scores = new List<int>();
         private int _pinCount;
 
@@ -19,13 +17,13 @@ namespace Bowling.Domain
         {
             get
             {
-                if (_scores.Any() && _scores.First() >= StartingPinsCount)
+                if (_scores.Any() && _scores.First() >= Consts.StartingPinsCount)
                 {
                     return FrameResult.Strike;
                 }
-                if (RollsCount >= RollsPerFrame)
+                if (RollsCount >= Consts.RollsPerFrame)
                 {
-                    if (_scores.Take(RollsPerFrame).Sum() >= StartingPinsCount)
+                    if (_scores.Take(Consts.RollsPerFrame).Sum() >= Consts.StartingPinsCount)
                     {
                         return FrameResult.Spare;
                     }
@@ -48,7 +46,7 @@ namespace Bowling.Domain
             }
             if (_pinCount == 0)
             {
-                _pinCount = StartingPinsCount;
+                _pinCount = Consts.StartingPinsCount;
             }
             if (rolledPins > _pinCount)
             {
@@ -65,7 +63,7 @@ namespace Bowling.Domain
 
         protected virtual int GetAllowedRollsCount()
         {
-            return RollsPerFrame;
+            return Consts.RollsPerFrame;
         }
     }
 }

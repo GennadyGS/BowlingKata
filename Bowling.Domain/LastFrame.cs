@@ -2,9 +2,7 @@ namespace Bowling.Domain
 {
     internal class LastFrame : Frame
     {
-        private const int MaxRollsPerLastFrame = 3;
-
-        private bool IsSpecialResult(FrameResult? result)
+        private static bool IsSpecialResult(FrameResult? result)
         {
             return result == FrameResult.Spare || result == FrameResult.Strike;
         }
@@ -12,7 +10,7 @@ namespace Bowling.Domain
         protected override int GetAllowedRollsCount()
         {
             return IsSpecialResult(Result)
-                ? MaxRollsPerLastFrame
+                ? Consts.MaxRollsPerLastFrame
                 : base.GetAllowedRollsCount();
         }
     }

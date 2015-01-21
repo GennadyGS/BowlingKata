@@ -1,5 +1,4 @@
-﻿using System;
-using Bowling.Domain;
+﻿using Bowling.Domain;
 using FluentAssert;
 using Xunit;
 using Xunit.Extensions;
@@ -36,7 +35,7 @@ namespace Bowling.Tests
         [Fact]
         public void SholdThrowExceptionOnRollLimitViolation()
         {
-            Assert.Throws<BowlingException>(() => _sut.Roll(Consts.MaxPinCount + 1));
+            Assert.Throws<BowlingException>(() => _sut.Roll(Consts.StartingPinsCount + 1));
         }
 
         [Theory]
@@ -67,9 +66,12 @@ namespace Bowling.Tests
         [Fact]
         public void ShouldLimitNumberOfZeroRollsPerGame()
         {
-            for (int i = 0; i < Consts.MinRollsPerGameCount; i++)
+            for (int i = 0; i < Consts.FrameCount; i++)
             {
-                _sut.Roll(0);
+                for (int j = 0; j < Consts.RollsPerFrame; j++)
+                {
+                    _sut.Roll(0);
+                }
             }
             Assert.Throws<BowlingException>(() => _sut.Roll(0));
         }
