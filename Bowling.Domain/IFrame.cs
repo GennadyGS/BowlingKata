@@ -4,8 +4,12 @@
     {
         bool IsOver { get; }
         
+        FrameResult? Result { get; }
+
         void Roll(int rolledPins);
-        
+
+        int GetBonusesForPreviousFrame(FrameResult? lastResult);
+
         int Score();
     }
 }

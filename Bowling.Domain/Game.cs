@@ -8,16 +8,6 @@ namespace Bowling.Domain
         private readonly ICollection<IFrame> _frames = new LinkedList<IFrame>();
         private IFrame _currentFrame;
 
-        public int Score()
-        {
-            return _frames.Sum(frame => frame.Score());
-        }
-
-        public void Roll(int rolledPins)
-        {
-            CurrentFrame.Roll(rolledPins);
-        }
-
         private IFrame CurrentFrame
         {
             get
@@ -33,6 +23,40 @@ namespace Bowling.Domain
                 }
                 return _currentFrame;
             }
+        }
+
+        public int Score()
+        {
+            return GetMainScore() + GetBonuses();
+        }
+
+        private int GetBonuses()
+        {
+            if (!_frames.Any())
+            {
+                return 0;
+            }
+            var initialState = new
+            {
+                Score = 0,
+                LastResult = (FrameResult?)null
+            };
+            return _frames.Aggregate(initialState, (state, frame) =>
+                new
+                {
+                    Score = state.Score + frame.GetBonusesForPreviousFrame(state.LastResult),
+                    LastResult = frame.Result
+                }).Score;
+        }
+
+        private int GetMainScore()
+        {
+            return _frames.Sum(frame => frame.Score());
+        }
+
+        public void Roll(int rolledPins)
+        {
+            CurrentFrame.Roll(rolledPins);
         }
 
         private IFrame CreateFrame()

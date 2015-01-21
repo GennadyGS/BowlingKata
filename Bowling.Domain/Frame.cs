@@ -38,6 +38,26 @@ namespace Bowling.Domain
             get { return RollsCount >= GetAllowedRollsCount(); }
         }
 
+        FrameResult? IFrame.Result
+        {
+            get
+            {
+                if (_scores.FirstOrDefault() >= Consts.StartingPinsCount)
+                {
+                    return FrameResult.Strike;
+                }
+                if (_scores.Take(Consts.RollsPerFrame).Sum() >= Consts.StartingPinsCount)
+                {
+                    return FrameResult.Spare;
+                }
+                if (_scores.Count() >= Consts.RollsPerFrame)
+                {
+                    return FrameResult.Normal;
+                }
+                return null;
+            }
+        }
+
         public void Roll(int rolledPins)
         {
             if (IsOver)
@@ -54,6 +74,19 @@ namespace Bowling.Domain
             }
             _scores.Add(rolledPins);
             _pinCount -= rolledPins;
+        }
+
+        int IFrame.GetBonusesForPreviousFrame(FrameResult? lastResult)
+        {
+            switch (lastResult)
+            {
+                case FrameResult.Spare:
+                    return _scores.First();
+                case FrameResult.Strike:
+                    return _scores.Take(2).Sum();
+                default:
+                    return 0;
+            }
         }
 
         public int Score()
