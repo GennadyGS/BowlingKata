@@ -7,6 +7,7 @@ namespace Bowling.Domain
     public class Game
     {
         private readonly ICollection<IFrame> _frames = new LinkedList<IFrame>();
+
         private IFrame _currentFrame;
 
         private IFrame CurrentFrame
@@ -28,26 +29,37 @@ namespace Bowling.Domain
 
         public int GetScore()
         {
-            return GetMainScore() + GetBonuses();
+            return GetScoreForFrameList(new RecursiveList<IFrame>(_frames));
         }
 
-        private int GetBonuses()
+        public void Roll(int rolledPins)
         {
-            return GetBonusesForFrameList(new RecursiveList<IFrame>(_frames));
+            CurrentFrame.Roll(rolledPins);
         }
 
-        private int GetBonusesForFrameList(IRecursiveList<IFrame> frameList)
+        private IFrame CreateFrame()
+        {
+            return _frames.Count < Consts.FrameCount - 1 ? new Frame() : new LastFrame();
+        }
+
+        private int GetScoreForFrameList(IRecursiveList<IFrame> frameList)
         {
             if (frameList.Empty)
             {
                 return 0;
             }
-            return GetBonusesForFrame(frameList.Head.Result, frameList.Tail) + GetBonusesForFrameList(frameList.Tail);
+            return GetFrameScore(frameList.Head, frameList.Tail) + GetScoreForFrameList(frameList.Tail);
         }
 
-        private int GetBonusesForFrame(FrameResult? frameResult, IEnumerable<IFrame> nextFrames)
+        private int GetFrameScore(IFrame frame, IEnumerable<IFrame> nextFrames)
         {
-            return GetRolls(nextFrames).Take(GetBonusCountFromResult(frameResult)).Sum();
+            return frame.GetScores().Sum() +
+                   GetRolls(nextFrames).Take(GetBonusCountFromResult(frame.Result)).Sum();
+        }
+
+        private IEnumerable<int> GetRolls(IEnumerable<IFrame> frames)
+        {
+            return frames.SelectMany(frame => frame.GetScores());
         }
 
         private static int GetBonusCountFromResult(FrameResult? frameResult)
@@ -61,26 +73,6 @@ namespace Bowling.Domain
                 default:
                     return 0;
             }
-        }
-
-        private IEnumerable<int> GetRolls(IEnumerable<IFrame> frames)
-        {
-            return frames.SelectMany(frame => frame.GetScores());
-        }
-
-        private int GetMainScore()
-        {
-            return _frames.Sum(frame => frame.GetScores().Sum());
-        }
-
-        public void Roll(int rolledPins)
-        {
-            CurrentFrame.Roll(rolledPins);
-        }
-
-        private IFrame CreateFrame()
-        {
-            return _frames.Count < Consts.FrameCount - 1 ? new Frame() : new LastFrame();
         }
     }
 }
