@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Bowling.Domain.Frames;
 using Bowling.Domain.Utils;
 
 namespace Bowling.Domain
@@ -29,7 +30,7 @@ namespace Bowling.Domain
 
         public int GetScore()
         {
-            return GetScoreForFrameList(new RecursiveList<IFrame>(_frames));
+            return GetFrameListScore(new RecursiveList<IFrame>(_frames));
         }
 
         public void Roll(int rolledPins)
@@ -42,13 +43,13 @@ namespace Bowling.Domain
             return _frames.Count < Consts.FrameCount - 1 ? new Frame() : new LastFrame();
         }
 
-        private int GetScoreForFrameList(IRecursiveList<IFrame> frameList)
+        private int GetFrameListScore(IRecursiveList<IFrame> frameList)
         {
             if (frameList.Empty)
             {
                 return 0;
             }
-            return GetFrameScore(frameList.Head, frameList.Tail) + GetScoreForFrameList(frameList.Tail);
+            return GetFrameScore(frameList.Head, frameList.Tail) + GetFrameListScore(frameList.Tail);
         }
 
         private int GetFrameScore(IFrame frame, IEnumerable<IFrame> nextFrames)

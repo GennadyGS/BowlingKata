@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bowling.Domain
+namespace Bowling.Domain.Frames
 {
     internal interface IFrame
     {

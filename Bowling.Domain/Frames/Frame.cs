@@ -1,17 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bowling.Domain
+namespace Bowling.Domain.Frames
 {
     internal class Frame : IFrame
     {
         private readonly List<int> _scores = new List<int>();
         private int _pinCount;
-
-        private int RollsCount
-        {
-            get { return _scores.Count; }
-        }
 
         protected FrameResult? Result
         {
@@ -33,12 +28,14 @@ namespace Bowling.Domain
             }
         }
 
+        private int RollsCount
+        {
+            get { return _scores.Count; }
+        }
+
         public bool IsOver
         {
-            get
-            {
-                return RollsCount >= GetAllowedRollsCount();
-            }
+            get { return RollsCount >= GetAllowedRollsCount(); }
         }
 
         FrameResult? IFrame.Result
@@ -61,7 +58,7 @@ namespace Bowling.Domain
             }
         }
 
-        public void Roll(int rolledPins)
+        void IFrame.Roll(int rolledPins)
         {
             if (IsOver)
             {
@@ -79,7 +76,7 @@ namespace Bowling.Domain
             _pinCount -= rolledPins;
         }
 
-        public IEnumerable<int> GetScores()
+        IEnumerable<int> IFrame.GetScores()
         {
             return _scores;
         }

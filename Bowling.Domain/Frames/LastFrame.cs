@@ -1,4 +1,4 @@
-namespace Bowling.Domain
+namespace Bowling.Domain.Frames
 {
     internal class LastFrame : Frame
     {

@@ -43,12 +43,12 @@
   <ItemGroup>
     <Compile Include="BowlingException.cs" />
     <Compile Include="Consts.cs" />
-    <Compile Include="Frame.cs" />
+    <Compile Include="Frames\Frame.cs" />
     <Compile Include="FrameResult.cs" />
     <Compile Include="Utils\IRecursiveList.cs" />
-    <Compile Include="LastFrame.cs" />
+    <Compile Include="Frames\LastFrame.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="IFrame.cs" />
+    <Compile Include="Frames\IFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\RecursiveList.cs" />
   </ItemGroup>
