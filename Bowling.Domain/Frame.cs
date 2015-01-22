@@ -97,6 +97,11 @@ namespace Bowling.Domain
             return _scores.Sum();
         }
 
+        public IEnumerable<int> GetScores()
+        {
+            return _scores;
+        }
+
         protected virtual int GetAllowedRollsCount()
         {
             return Result == FrameResult.Strike ? 1 : Consts.RollsPerFrame;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Bowling.Domain.Utils;
 
 namespace Bowling.Domain
 {
@@ -32,21 +33,39 @@ namespace Bowling.Domain
 
         private int GetBonuses()
         {
-            if (!_frames.Any())
+            return GetBonusesForFrameList(new RecursiveList<IFrame>(_frames));
+        }
+
+        private int GetBonusesForFrameList(IRecursiveList<IFrame> frameList)
+        {
+            if (frameList.Empty)
             {
                 return 0;
             }
-            var initialState = new
+            return GetBonusesForFrame(frameList.Head.Result, frameList.Tail) + GetBonusesForFrameList(frameList.Tail);
+        }
+
+        private int GetBonusesForFrame(FrameResult? frameResult, IEnumerable<IFrame> nextFrames)
+        {
+            return GetRolls(nextFrames).Take(GetBonusCountFromResult(frameResult)).Sum();
+        }
+
+        private static int GetBonusCountFromResult(FrameResult? frameResult)
+        {
+            switch (frameResult)
             {
-                Score = 0,
-                LastResult = (FrameResult?)null
-            };
-            return _frames.Aggregate(initialState, (state, frame) =>
-                new
-                {
-                    Score = state.Score + frame.GetBonusesForPreviousFrame(state.LastResult),
-                    LastResult = frame.Result
-                }).Score;
+                case FrameResult.Spare:
+                    return Consts.SpareBonusRolls;
+                case FrameResult.Strike:
+                    return Consts.StrikeBonusRolls;
+                default:
+                    return 0;
+            }
+        }
+
+        private IEnumerable<int> GetRolls(IEnumerable<IFrame> frames)
+        {
+            return frames.SelectMany(frame => frame.GetScores());
         }
 
         private int GetMainScore()

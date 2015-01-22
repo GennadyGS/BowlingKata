@@ -1,4 +1,6 @@
-﻿namespace Bowling.Domain
+﻿using System.Collections.Generic;
+
+namespace Bowling.Domain
 {
     internal interface IFrame
     {
@@ -11,5 +13,7 @@
         int GetBonusesForPreviousFrame(FrameResult? lastResult);
 
         int GetScore();
+        
+        IEnumerable<int> GetScores();
     }
 }
