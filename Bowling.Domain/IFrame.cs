@@ -10,6 +10,6 @@
 
         int GetBonusesForPreviousFrame(FrameResult? lastResult);
 
-        int Score();
+        int GetScore();
     }
 }

@@ -51,7 +51,7 @@ namespace Bowling.Domain
 
         private int GetMainScore()
         {
-            return _frames.Sum(frame => frame.Score());
+            return _frames.Sum(frame => frame.GetScore());
         }
 
         public void Roll(int rolledPins)
