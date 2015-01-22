@@ -17,7 +17,7 @@ namespace Bowling.Tests.Generators
 
         public IEnumerable<int> GenerateAllRolls(FrameResult frameResult)
         {
-            return GenerateAllFrames(frameResult).SelectMany(generator => generator.GetRolls());
+            return GenerateAllFrames(frameResult).SelectMany(frame => frame.GetRolls());
         }
 
         public FrameRollGenerator GenerateFrame(FrameResult frameResult, bool isLast = false)

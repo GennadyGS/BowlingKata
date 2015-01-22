@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bowling.Tests.Common;
 
 namespace Bowling.Tests.Generators
 {
@@ -19,11 +18,6 @@ namespace Bowling.Tests.Generators
             {
                 yield return GenerateNextRolledPins();
             }
-        }
-
-        public override FrameResult FrameResult
-        {
-            get { return FrameResult.Spare; }
         }
     }
 }

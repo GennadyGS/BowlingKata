@@ -48,11 +48,8 @@ namespace Bowling.Tests
         {
             int rolledPins1 = _random.Next(Consts.StartingPinsCount);
             int rolledPins2 = Consts.StartingPinsCount + 1 - rolledPins1;
-            Assert.Throws<BowlingException>(() =>
-            {
-                _sut.Roll(rolledPins1);
-                _sut.Roll(rolledPins2);
-            });
+            _sut.Roll(rolledPins1);
+            Assert.Throws<BowlingException>(() => _sut.Roll(rolledPins2));
         }
 
         [Fact]
@@ -74,11 +71,19 @@ namespace Bowling.Tests
         [InlineData(FrameResult.Strike)]
         public void ShouldLimitNumberOfRollsPerGame(FrameResult frameResult)
         {
-            foreach (int pinCount in _gameRollGenerator.GenerateAllRolls(FrameResult.Normal))
+            foreach (int pinCount in _gameRollGenerator.GenerateAllRolls(frameResult))
             {
                 _sut.Roll(pinCount);
             }
             Assert.Throws<BowlingException>(() => _sut.Roll(0));
+        }
+
+        [Fact]
+        public void ShouldScoreCorrectlyDoubleNormalFrames()
+        {
+            var frameRolls = RollGeneratedFrame(FrameResult.Normal);
+            var nextframeRolls = RollGeneratedFrame(FrameResult.Normal);
+            Assert.Equal(frameRolls.Sum() + nextframeRolls.Sum(), _sut.GetScore());
         }
 
         [Fact]

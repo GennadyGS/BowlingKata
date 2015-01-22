@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Bowling.Domain;
-using Bowling.Tests.Common;
 
 namespace Bowling.Tests.Generators
 {
@@ -18,8 +17,6 @@ namespace Bowling.Tests.Generators
             _randomRoll = randomRoll;
         }
 
-        public abstract FrameResult FrameResult { get; }
-
         protected bool IsLast
         {
             get { return _isLast; }
@@ -33,10 +30,15 @@ namespace Bowling.Tests.Generators
             {
                 _pinsRemained = Consts.StartingPinsCount;
             }
-            bool ultimateCleanup = cleanUp ?? _randomRoll.Next(2) > 0;
+            bool ultimateCleanup = cleanUp ?? NextBoolean();
             int pinsRolled = ultimateCleanup ? _pinsRemained : _randomRoll.Next(_pinsRemained - 1);
             _pinsRemained -= pinsRolled;
             return pinsRolled;
+        }
+
+        private bool NextBoolean()
+        {
+            return _randomRoll.Next(2) > 0;
         }
     }
 }
