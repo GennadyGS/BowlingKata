@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Bowling.Domain;
+using Bowling.Tests.Common;
 
-namespace Bowling.Tests
+namespace Bowling.Tests.Generators
 {
     internal abstract class FrameRollGenerator
     {

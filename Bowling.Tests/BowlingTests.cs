@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bowling.Domain;
+using Bowling.Tests.Common;
+using Bowling.Tests.Generators;
 using FluentAssert;
 using Xunit;
 using Xunit.Extensions;

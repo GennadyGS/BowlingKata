@@ -1,4 +1,4 @@
-﻿namespace Bowling.Tests
+﻿namespace Bowling.Tests.Common
 {
     public enum FrameResult
     {

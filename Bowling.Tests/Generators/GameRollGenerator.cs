@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bowling.Domain;
+using Bowling.Tests.Common;
 
-namespace Bowling.Tests
+namespace Bowling.Tests.Generators
 {
     internal class GameRollGenerator
     {

@@ -57,13 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BowlingTests.cs" />
-    <Compile Include="FrameResult.cs" />
-    <Compile Include="FrameRollGenerator.cs" />
-    <Compile Include="NormalFrameRollGenerator.cs" />
+    <Compile Include="Common\FrameResult.cs" />
+    <Compile Include="Generators\FrameRollGenerator.cs" />
+    <Compile Include="Generators\NormalFrameRollGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameRollGenerator.cs" />
-    <Compile Include="SpareFrameRollGenerator.cs" />
-    <Compile Include="StrikeFrameRollGenerator.cs" />
+    <Compile Include="Generators\GameRollGenerator.cs" />
+    <Compile Include="Generators\SpareFrameRollGenerator.cs" />
+    <Compile Include="Generators\StrikeFrameRollGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
