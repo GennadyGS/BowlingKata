@@ -148,6 +148,23 @@ namespace Bowling.Tests
             Assert.Equal(totalPins, _sut.GetScore());
         }
 
+        [Fact]
+        public void ShouldScoreCorrectlyGameWithStrikeFrames()
+        {
+            var frameRollGenerators = _gameRollGenerator.GenerateAllFrames(FrameResult.Strike).ToList();
+            foreach (var frame in frameRollGenerators)
+            {
+                var pinCounts = frame.GetRolls().ToList();
+                foreach (int pinCount in pinCounts)
+                {
+                    _sut.Roll(pinCount);
+                }
+            }
+            const int totalPins = ((Consts.FrameCount - 1)*(Consts.StrikeBonusRolls + 1) + Consts.MaxRollsPerLastFrame)*
+                                  Consts.StartingPinsCount;
+            Assert.Equal(totalPins, _sut.GetScore());
+        }
+
         private List<int> RollGeneratedFrame(FrameResult frameResult)
         {
             var frameRolls = _gameRollGenerator.GenerateFrame(frameResult).GetRolls().ToList();

@@ -16,8 +16,8 @@ namespace Bowling.Tests.Generators
             yield return GenerateNextRolledPins(true);
             if (IsLast)
             {
-                yield return GenerateNextRolledPins();
-                yield return GenerateNextRolledPins();
+                yield return GenerateNextRolledPins(true);
+                yield return GenerateNextRolledPins(true);
             }
         }
 
