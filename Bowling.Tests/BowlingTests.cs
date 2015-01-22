@@ -13,12 +13,12 @@ namespace Bowling.Tests
     public class BowlingTests
     {
         private readonly Random _random = new Random();
-        private readonly GameRollGenerator _rollsGenerator;
+        private readonly GameRollGenerator _gameRollGenerator;
         private readonly Game _sut = new Game();
 
         public BowlingTests()
         {
-            _rollsGenerator = new GameRollGenerator(_random);
+            _gameRollGenerator = new GameRollGenerator(_random);
         }
 
         [Fact]
@@ -74,23 +74,11 @@ namespace Bowling.Tests
         [InlineData(FrameResult.Strike)]
         public void ShouldLimitNumberOfRollsPerGame(FrameResult frameResult)
         {
-            foreach (int pinCount in _rollsGenerator.GenerateRolls(FrameResult.Normal))
+            foreach (int pinCount in _gameRollGenerator.GenerateAllRolls(FrameResult.Normal))
             {
                 _sut.Roll(pinCount);
             }
             Assert.Throws<BowlingException>(() => _sut.Roll(0));
-        }
-
-        [Fact]
-        public void ShouldScoreCorrectlyGameWithNormalFrames()
-        {
-            int totalPins = 0;
-            foreach (int pinCount in _rollsGenerator.GenerateRolls(FrameResult.Normal))
-            {
-                _sut.Roll(pinCount);
-                totalPins += pinCount;
-            }
-            Assert.Equal(totalPins, _sut.GetScore());
         }
 
         [Fact]
@@ -127,9 +115,42 @@ namespace Bowling.Tests
             Assert.Equal(Consts.StartingPinsCount * 3 + frameRolls3.Sum() * 2 + frameRolls3.First(), _sut.GetScore());
         }
 
+        [Fact]
+        public void ShouldScoreCorrectlyGameWithNormalFrames()
+        {
+            int totalPins = 0;
+            foreach (int pinCount in _gameRollGenerator.GenerateAllRolls(FrameResult.Normal))
+            {
+                _sut.Roll(pinCount);
+                totalPins += pinCount;
+            }
+            Assert.Equal(totalPins, _sut.GetScore());
+        }
+
+        [Fact]
+        public void ShouldScoreCorrectlyGameWithSpareFrames()
+        {
+            int totalPins = 0;
+            var frameRollGenerators = _gameRollGenerator.GenerateAllFrames(FrameResult.Spare).ToList();
+            foreach (var frame in frameRollGenerators)
+            {
+                var pinCounts = frame.GetRolls().ToList();
+                foreach (int pinCount in pinCounts)
+                {
+                    _sut.Roll(pinCount);
+                    totalPins += pinCount;
+                }
+                if (frame != frameRollGenerators.First())
+                {
+                    totalPins += pinCounts.First();
+                }
+            }
+            Assert.Equal(totalPins, _sut.GetScore());
+        }
+
         private List<int> RollGeneratedFrame(FrameResult frameResult)
         {
-            var frameRolls = _rollsGenerator.CreateFrameRollGenerator(frameResult).GetRolls().ToList();
+            var frameRolls = _gameRollGenerator.GenerateFrame(frameResult).GetRolls().ToList();
             foreach (int pinCount in frameRolls)
             {
                 _sut.Roll(pinCount);
