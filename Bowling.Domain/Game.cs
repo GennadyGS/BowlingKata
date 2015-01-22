@@ -70,7 +70,7 @@ namespace Bowling.Domain
 
         private int GetMainScore()
         {
-            return _frames.Sum(frame => frame.GetScore());
+            return _frames.Sum(frame => frame.GetScores().Sum());
         }
 
         public void Roll(int rolledPins)

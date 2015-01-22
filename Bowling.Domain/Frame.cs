@@ -79,24 +79,6 @@ namespace Bowling.Domain
             _pinCount -= rolledPins;
         }
 
-        int IFrame.GetBonusesForPreviousFrame(FrameResult? lastResult)
-        {
-            switch (lastResult)
-            {
-                case FrameResult.Spare:
-                    return _scores.First();
-                case FrameResult.Strike:
-                    return _scores.Take(2).Sum();
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetScore()
-        {
-            return _scores.Sum();
-        }
-
         public IEnumerable<int> GetScores()
         {
             return _scores;
